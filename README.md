@@ -54,9 +54,9 @@ CREATE TABLE Facturas (
     TotalGeneral DECIMAL(10,2)
 );
 ```
-
+### VEMOS LA ESTRUCTURA DE BD.
 ---
-
+![Image](https://github.com/user-attachments/assets/bea42a08-b802-4a86-b3e3-31f47ed79ee9)
 ### 4. Archivo db.php (conexión a la base de datos)
 
 ```php
@@ -171,9 +171,8 @@ Este archivo muestra el formulario para insertar una factura:
 </body>
 </html>
 ```
-
+### REGISTRAMOS FACTURA.
 ---
-
 ![Image](https://github.com/user-attachments/assets/f00da080-1658-449b-9bd8-2fc009eb9494)
 
 ### 6. agregar.php - Código para insertar la factura
@@ -235,8 +234,10 @@ $result = $conexion->query("SELECT * FROM Facturas");
     <a href="REPORTE1.php">Ver reporte PDF</a>
 </div>
 ```
-
+### AQUI PODREMOS VISUALIZAR LA FACTURA AGREGADA.
 ---
+
+![Image](https://github.com/user-attachments/assets/8495e456-59cc-4838-82c7-3190e3b91ca1)
 
 ### 🗑️ 8. eliminar.php - Eliminar una factura
 
@@ -248,25 +249,11 @@ $sql = "DELETE FROM Facturas WHERE Id=$id";
 $conexion->query($sql);
 header("Location: reporte.php");
 ?>
-🖊️ 9. editar.php - Formulario para editar factura
-php
-Copiar
-Editar
-<?php
-include("db.php");
-$id = $_GET['id'];
-$sql = "SELECT * FROM Facturas WHERE Id=$id";
-$result = $conexion->query($sql);
-$row = $result->fetch_assoc();
-?>
-
-<form action="actualizar.php" method="POST">
-    <input type="hidden" name="id" value="<?= $row['Id'] ?>">
-
-</form>
 ```
-
+### AQUI PODREMOS ELIMINAR LA FACTURA.
 ---
+
+![Image](https://github.com/user-attachments/assets/4e759364-4bfc-453a-8b44-222271ebc0e7)
 
 ### 10. actualizar.php - Código para actualizar la factura
 
@@ -274,32 +261,92 @@ $row = $result->fetch_assoc();
 <?php
 include("db.php");
 
-$id = $_POST['id'];
-$descripcion = $_POST['descripcion'];
-$categoria = $_POST['categoria'];
-$cantidad = $_POST['cantidad'];
-$precio = $_POST['precio'];
-$itebis = $_POST['itebis'];
-$descuento = $_POST['descuento'];
-
-$total = ($cantidad * $precio) + $itebis - $descuento;
-
-$sql = "UPDATE Facturas SET 
-        Descripcion='$descripcion',
-        Categoria='$categoria',
-        Cantidad=$cantidad,
-        PrecioUnitario=$precio,
-        ITEBIS=$itebis,
-        Descuento=$descuento,
-        TotalGeneral=$total
-        WHERE Id=$id";
-
-$conexion->query($sql);
-header("Location: reporte.php");
+$id = $_GET['id'];
+$sql = "SELECT * FROM Facturas WHERE Id=$id";
+$result = $conexion->query($sql);
+$row = $result->fetch_assoc();
 ?>
-```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Factura</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #001F3F, #003366);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: rgba(0,0,0,0.8);
+            padding: 40px;
+            border-radius: 25px;
+            width: 110%;
+            max-width: 700px;
+            box-shadow: 0 0 15px #00ccff55;
+        }
+        h2 {
+            text-align: center;
+            color: #00ccff;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"],
+        input[type="number"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            background-color: #00bfff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #009fd1;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #00ccff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <h2>Editar Factura</h2>
+    <form action="actualizar.php" method="POST">
+        <input type="hidden" name="id" value="<?= $row['Id'] ?>">
+        <input type="text" name="descripcion" value="<?= $row['Descripcion'] ?>" required>
+        <input type="text" name="categoria" value="<?= $row['Categoria'] ?>" required>
+        <input type="number" name="cantidad" value="<?= $row['Cantidad'] ?>" required>
+        <input type="number" step="0.01" name="precio" value="<?= $row['PrecioUnitario'] ?>" required>
+        <input type="number" step="0.01" name="itebis" value="<?= $row['ITEBIS'] ?>" required>
+        <input type="number" step="0.01" name="descuento" value="<?= $row['Descuento'] ?>" required>
+        <button type="submit">Actualizar</button>
+    </form>
+    <a href="reporte.php">← Volver al Reporte</a>
+</div>
+
+</body>
+</html>
+
+```
+### AQUI PODREMOS EDITAR UNA FACTURA.
 ---
+![Image](https://github.com/user-attachments/assets/dee68671-8634-40bf-bedc-e34c7c418b7e)
+
 ### 🧾 11. REPORTE1.php - Generar PDF con FPDF
 
 ```php
@@ -324,9 +371,9 @@ while ($row = $query->fetch_assoc()) {
 $pdf->Output();
 ?>
 ```
-
+### AQUI PODREMOS VISUALIZAR EL REPORTE CON TODA LA INSTALACION QUE MOSTRARE ADELANTE.
 ---
-
+![Image](https://github.com/user-attachments/assets/59db50dd-6ca1-4e84-99e4-e1dd11cde181)
 #  12. Instalación de FPDF
 🔽 Paso 1: Descargar
 
@@ -362,4 +409,121 @@ require('fpdf/fpdf.php');
 - Haz clic en editar o eliminar para probar funciones CRUD.
 
 - Haz clic en “Ver reporte PDF” → se genera y descarga el archivo PDF.
+
+#  Documentación Paso a Paso: Sistema de Facturación con Reporte en C# Windows Forms
+### 🔹 Paso 1: Configuración y Estructura del Proyecto
+---
+## 📁 Nombre del proyecto:
+- ReportesFacturasApp
+
+## 📁 Estructura de Carpetas:
+conexion.cs: clase para la conexión a la base de datos.
+
+Factura.cs: clase de modelo (entidad).
+
+FormFactura.cs: formulario para registrar/gestionar facturas.
+
+FormGestionFacturas.cs: muestra el listado y permite editar/eliminar/agregar.
+
+FormReporte.cs: muestra el reporte en ReportViewer.
+
+BD_FacturacionPruebasDataSet.xsd: dataset usado para el ReportViewer.
+
+victobs.sqlDataSet.xsd: otro dataset.
+
+ReporteFactura.rdlc: archivo del reporte.
+
+App.config: configuración de conexión.
+
+Program.cs: clase principal del sistema.
+
+---
+![Image](https://github.com/user-attachments/assets/f8327e53-ea16-4dba-a295-07d4d3bfb8db)
+
+### Paso 2: Crear y Conectar la Base de Datos
+Script de Base de Datos:
+---
+```sql
+CREATE DATABASE BD_FacturacionPruebas;
+GO
+
+USE BD_FacturacionPruebas;
+GO
+
+CREATE TABLE Facturas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Descripcion NVARCHAR(255),
+    Categoria NVARCHAR(100),
+    Cantidad INT,
+    PrecioUnitario DECIMAL(10,2),
+    ITEBIS DECIMAL(10,2),
+    Descuento DECIMAL(10,2),
+    TotalGeneral AS ((Cantidad * PrecioUnitario + ITEBIS) - Descuento) PERSISTED
+);
+```
+---
+
+### Paso 3: Clase de Conexión conexion.cs
+---
+
+using System.Data.SqlClient;
+
+namespace ReportesFacturasApp
+{
+    public class conexion
+    {
+        private SqlConnection con;
+
+        public SqlConnection Conectar()
+        {
+            con = new SqlConnection("Data Source=.;Initial Catalog=BD_FacturacionPruebas;Integrated Security=True");
+            return con;
+        }
+    }
+}
+🔹 Paso 4: Modelo de Factura Factura.cs
+csharp
+Copiar
+Editar
+namespace ReportesFacturasApp
+{
+    public class Factura
+    {
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
+        public string Categoria { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal ITEBIS { get; set; }
+        public decimal Descuento { get; set; }
+        public decimal TotalGeneral { get; set; }
+    }
+}
+🔹 Paso 5: Formulario para Registrar Facturas FormFactura.cs
+(Se asume que contiene TextBox para cada campo y un botón btnGuardar)
+
+csharp
+Copiar
+Editar
+private void btnGuardar_Click(object sender, EventArgs e)
+{
+    using (SqlConnection con = new conexion().Conectar())
+    {
+        string query = "INSERT INTO Facturas (Descripcion, Categoria, Cantidad, PrecioUnitario, ITEBIS, Descuento) " +
+                       "VALUES (@Descripcion, @Categoria, @Cantidad, @PrecioUnitario, @ITEBIS, @Descuento)";
+
+        SqlCommand cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@Descripcion", txtDescripcion.Text);
+        cmd.Parameters.AddWithValue("@Categoria", txtCategoria.Text);
+        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(txtCantidad.Text));
+        cmd.Parameters.AddWithValue("@PrecioUnitario", Convert.ToDecimal(txtPrecio.Text));
+        cmd.Parameters.AddWithValue("@ITEBIS", Convert.ToDecimal(txtITEBIS.Text));
+        cmd.Parameters.AddWithValue("@Descuento", Convert.ToDecimal(txtDescuento.Text));
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+        MessageBox.Show("Factura guardada correctamente");
+    }
+}
+- 
 
