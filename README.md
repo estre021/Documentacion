@@ -16,6 +16,8 @@
 ### 2. Estructura del proyecto
 
 ---
+
+```
 facturacion/
 │
 ├── db.php
@@ -28,10 +30,12 @@ facturacion/
 ├── REPORTE1.php
 ├── fpdf/
 │   ├── fpdf.php
+```
 
 ### 3. Crear la base de datos BD_FacturacionPruebas
 
 ---
+
 ```sql
 Ejecuta este SQL en phpMyAdmin:
 
@@ -50,16 +54,19 @@ CREATE TABLE Facturas (
     TotalGeneral DECIMAL(10,2)
 );
 ```
+
 ---
 
 ### 4. Archivo db.php (conexión a la base de datos)
 
+```php
 <?php
 $conexion = new mysqli("localhost", "root", "", "BD_FacturacionPruebas");
 if ($conexion->connect_error) {
     die("Conexión fallida: " . $conexion->connect_error);
 }
 ?>
+```
 
 ---
 
@@ -75,6 +82,70 @@ Este archivo muestra el formulario para insertar una factura:
     <title>Registrar Factura</title>
     <style>
         /* Aquí va tu CSS si quieres agregarle pero aqui te dejo un ejemplo del mio*/
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #001F3F, #003366);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #0a0a0aee;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            text-align: center;
+            color: #00ccff;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form button {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        form input[type="text"],
+        form input[type="number"] {
+            background-color: #ffffff10;
+            border: 1px solid #00ccff;
+            color: white;
+        }
+
+        form input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ccff80;
+        }
+
+        form button {
+            background: linear-gradient(to right, #0066cc, #00ccff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: linear-gradient(to right, #0055a5, #00bfff);
+        }
 
     </style>
 </head>
@@ -100,12 +171,14 @@ Este archivo muestra el formulario para insertar una factura:
 </body>
 </html>
 ```
----
-![Image](https://github.com/user-attachments/assets/f00da080-1658-449b-9bd8-2fc009eb9494)
 
+---
+
+![Image](https://github.com/user-attachments/assets/f00da080-1658-449b-9bd8-2fc009eb9494)
 
 ### 6. agregar.php - Código para insertar la factura
 
+```php
 <?php
 include("db.php");
 
@@ -124,11 +197,13 @@ $conexion->query($sql);
 
 header("Location: reporte.php");
 ?>
+```
 
 ---
 
 ### 📋 7. reporte.php - Ver listado de facturas
 
+```php
 <?php
 include("db.php");
 $result = $conexion->query("SELECT * FROM Facturas");
@@ -159,11 +234,13 @@ $result = $conexion->query("SELECT * FROM Facturas");
     </table>
     <a href="REPORTE1.php">Ver reporte PDF</a>
 </div>
+```
 
 ---
 
 ### 🗑️ 8. eliminar.php - Eliminar una factura
 
+```php
 <?php
 include("db.php");
 $id = $_GET['id'];
@@ -187,11 +264,13 @@ $row = $result->fetch_assoc();
     <input type="hidden" name="id" value="<?= $row['Id'] ?>">
 
 </form>
+```
 
 ---
 
 ### 10. actualizar.php - Código para actualizar la factura
 
+```php
 <?php
 include("db.php");
 
@@ -218,6 +297,7 @@ $sql = "UPDATE Facturas SET
 $conexion->query($sql);
 header("Location: reporte.php");
 ?>
+```
 
 ---
 ### 🧾 11. REPORTE1.php - Generar PDF con FPDF
@@ -249,35 +329,37 @@ $pdf->Output();
 
 #  12. Instalación de FPDF
 🔽 Paso 1: Descargar
-Ve al sitio oficial: https://www.fpdf.org
 
-Haz clic en Download.
+- Ve al sitio oficial: https://www.fpdf.org
 
-Descomprime la carpeta fpdf y colócala dentro de tu proyecto.
+- Haz clic en Download.
+
+- Descomprime la carpeta fpdf y colócala dentro de tu proyecto.
 
 Debe quedar así:
 
-css
-Copiar
-Editar
+```
 facturacion/
 ├── fpdf/
 │   ├── fpdf.php
 │   ├── font/
 │   └── ...otros archivos
-✅ Paso 2: Usarlo en tu archivo PHP
-php
-Copiar
-Editar
+```
+### ✅ Paso 2: Usarlo en tu archivo PHP
+
+```php
 require('fpdf/fpdf.php');
+```
+
 🧪 13. Pruebas y flujo de trabajo
-Abre tu navegador y entra a http://localhost/facturacion/index.php
 
-Llena el formulario → presiona “Agregar”.
+- Abre tu navegador y entra a http://localhost/facturacion/index.php
 
-Ve a reporte.php → verás la tabla de facturas.
+- Llena el formulario → presiona “Agregar”.
 
-Haz clic en editar o eliminar para probar funciones CRUD.
+- Ve a reporte.php → verás la tabla de facturas.
 
-Haz clic en “Ver reporte PDF” → se genera y descarga el archivo PDF.
+- Haz clic en editar o eliminar para probar funciones CRUD.
+
+- Haz clic en “Ver reporte PDF” → se genera y descarga el archivo PDF.
 
