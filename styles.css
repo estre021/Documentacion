@@ -1,0 +1,104 @@
+ body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #001F3F, #003366);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            background-color: #0a0a0aee;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Título */
+        h2 {
+            text-align: center;
+            color: #00ccff;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        /* Inputs y botón */
+        form input[type="text"],
+        form input[type="number"],
+        form button {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        form input[type="text"],
+        form input[type="number"] {
+            background-color: #ffffff10;
+            border: 1px solid #00ccff;
+            color: white;
+        }
+
+        form input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ccff80;
+        }
+
+        form button {
+            background: linear-gradient(to right, #0066cc, #00ccff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: linear-gradient(to right, #0055a5, #00bfff);
+        }
+
+        /* Tabla */
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        tr:hover {
+            background-color: rgba(0, 204, 255, 0.1);
+        }
+
+        /* Enlaces */
+        a {
+            color: #00ccff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
