@@ -32,7 +32,7 @@ facturacion/
 ### 3. Crear la base de datos BD_FacturacionPruebas
 
 ---
-
+```sql
 Ejecuta este SQL en phpMyAdmin:
 
 CREATE DATABASE BD_FacturacionPruebas;
@@ -49,7 +49,7 @@ CREATE TABLE Facturas (
     Descuento DECIMAL(10,2),
     TotalGeneral DECIMAL(10,2)
 );
-
+```
 ---
 
 ### 4. Archivo db.php (conexión a la base de datos)
@@ -66,6 +66,7 @@ if ($conexion->connect_error) {
 ### 5. index.php - Formulario para registrar facturas
 Este archivo muestra el formulario para insertar una factura:
 
+```php
 <?php include("db.php"); ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -98,8 +99,10 @@ Este archivo muestra el formulario para insertar una factura:
 </div>
 </body>
 </html>
-
+```
 ---
+![Image](https://github.com/user-attachments/assets/f00da080-1658-449b-9bd8-2fc009eb9494)
+
 
 ### 6. agregar.php - Código para insertar la factura
 
